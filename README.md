@@ -248,3 +248,60 @@ Suggested first steps:
 7. Polish the experience for a business demo.
 
 Have fun building something that helps Perseus Equipment make faster, smarter decisions.
+
+## Local App Quick Start
+
+1. Install dependencies:
+   - `python -m pip install -r requirements.txt`
+2. Run the app:
+   - `python -m streamlit run app.py`
+3. Run smoke checks:
+   - `python -m pytest tests/test_smoke.py`
+
+The app uses `perseus_equipment_database.db` in the workspace root by default.
+
+## Ask Your Data (LLM Q&A V1)
+
+The dashboard now includes an **Ask Your Data** tab for KPI-focused natural-language questions.
+
+### Setup
+
+1. Install dependencies:
+   - `python -m pip install -r requirements.txt`
+2. Optional: set cloud model API key:
+   - PowerShell: `$env:OPENAI_API_KEY="your_key_here"`
+3. Run the app:
+   - `python -m streamlit run app.py`
+
+If no API key is present, the app still answers using grounded KPI data with a non-LLM fallback summary.
+
+### Supported V1 Question Types
+
+- Current KPI value:
+  - "What is our dead stock ratio?"
+- Period comparison:
+  - "How did tech efficiency change versus previous period?"
+- Risk summary:
+  - "Which KPI is in critical status right now?"
+
+### Safety / Guardrails
+
+- No raw user-generated SQL execution.
+- Only approved KPI functions are used for answers.
+- Every answer includes period and evidence payload.
+- Unsupported questions return safe fallback guidance.
+
+### Demo Prompts
+
+- Owner/GM:
+  - "What is our service absorption right now?"
+  - "How did parts turns change versus previous period?"
+  - "Which KPI should I worry about most this week?"
+- Service Manager:
+  - "What is tech efficiency in this period?"
+  - "Are open work orders over 14 days increasing?"
+  - "What changed most in service KPI performance?"
+- Parts Manager:
+  - "What is our dead stock ratio?"
+  - "How is parts turn trending versus prior period?"
+  - "Which inventory KPI is currently in warning?"
